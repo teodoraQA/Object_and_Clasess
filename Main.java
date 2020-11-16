@@ -1,4 +1,4 @@
-package Students2;
+package Students2_ver2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +21,9 @@ public class Main {
             if (!studentIsPresent(students, firstName, lastName)) {
                 students.add(fillStudentsList(currentStudent));
             } else {
-                Students presentStudent = getStudent(students, firstName, lastName);
-                rewriteStudent(currentStudent, firstName, lastName, presentStudent);
+                Students rewriteStudent = fillStudentsList(currentStudent);
+                int rememberIndex = getRememberIndex(students, firstName, lastName);
+                students.set(rememberIndex, rewriteStudent);
             }
             student = scanner.nextLine();
         }
@@ -37,22 +38,17 @@ public class Main {
         }
     }
 
-    private static void rewriteStudent(String[] currentStudent, String firstName, String lastName, Students rewriteStudent) {
-        rewriteStudent.setFirstName(firstName);
-        rewriteStudent.setLastName(lastName);
-        rewriteStudent.setAge(currentStudent[2]);
-        rewriteStudent.setHomeTown(currentStudent[3]);
-    }
-
-    private static Students getStudent(List<Students> students, String firstName, String lastName) {
-        Students existingStudent = null;
-
-        for (Students s : students) {
-            if (s.getFirstName().equals(firstName) && s.getLastName().equals(lastName)) {
-                existingStudent = s;
+    private static int getRememberIndex(List<Students> students, String firstName,
+                                        String lastName) {
+        int rememberIndex = 0;
+        for (int i = 0; i < students.size(); i++) {
+            if (students.get(i).getFirstName().equals(firstName)
+                    && students.get(i).getLastName().equals(lastName)) {
+                rememberIndex = i;
+                break;
             }
         }
-        return existingStudent;
+        return rememberIndex;
     }
 
     private static boolean studentIsPresent(List<Students> students, String firstName, String lastName) {
@@ -64,7 +60,6 @@ public class Main {
         return false;
     }
 
-
     private static Students fillStudentsList(String[] currentStudent) {
         String firstName = currentStudent[0];
         String lastName = currentStudent[1];
@@ -74,5 +69,6 @@ public class Main {
         Students newStudent = new Students(firstName, lastName, age, homeTown);
         return newStudent;
     }
+
 
 }

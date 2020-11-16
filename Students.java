@@ -1,4 +1,4 @@
-package Students2;
+package Students2_ver2;
 
 public class Students {
     private String firstName;
